@@ -35,9 +35,6 @@ public class Vehicle {
             result += String.format(", Reichweite: %d km ", range.get());
         }
         
-        if ()
-
-
     }
     
 }
