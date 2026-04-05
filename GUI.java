@@ -7,12 +7,13 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-public class FreakyApp {
+public class GUI {
     private static final String[] FRAMES = {"⌛", "⏳"};
     private int index = 0;
 
@@ -22,26 +23,38 @@ public class FreakyApp {
     private Timer animationTimer;
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new FreakyApp().createMainWindow());
+        SwingUtilities.invokeLater(() -> new GUI().createMainWindow());
     }
 
     private void createMainWindow() {
-        mainFrame = new JFrame("Freaky");
+        mainFrame = new JFrame("Garage Management System (GMS)");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(400, 300);
-        mainFrame.getContentPane().setBackground(Color.GREEN);
+        mainFrame.getContentPane().setBackground(Color.GRAY);
         mainFrame.setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         panel.setBackground(Color.GREEN);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JLabel helloLabel = new JLabel("Hello", SwingConstants.CENTER);
+        JLabel helloLabel = new JLabel("Garage Management System (GMS)", SwingConstants.CENTER);
         helloLabel.setOpaque(true);
-        helloLabel.setBackground(Color.YELLOW);
-        helloLabel.setForeground(Color.BLACK);
+        helloLabel.setBackground(Color.DARK_GRAY);
+        helloLabel.setForeground(Color.WHITE);
         helloLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        helloLabel.setMaximumSize(new Dimension(120, 35));
+        helloLabel.setMaximumSize(new Dimension(280, 35));
+
+        
+        // Inputfenster erscheint sofort nach dem Öffnen
+        String eingabe = JOptionPane.showInputDialog(
+                MainWindow,
+                "Bitte Verbrauch eingeben (L/100km):"
+        );
+
+        if (eingabe != null) {
+            helloLabel.setText("Verbrauch: " + eingabe + " L/100km");
+        }
+
 
         JButton infoButton = new JButton("Was passiert hier?");
         infoButton.setBackground(Color.BLUE);
