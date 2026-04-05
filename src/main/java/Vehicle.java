@@ -7,9 +7,9 @@ public class Vehicle {
     private String marke;
     private String typ;
     private String licensePlate;
-    private Optional<Integer> consumption;
+    private Optional<Double> consumption;
     private Optional<Integer> range;
-    private Otional<Integer> fuelTankCapacity;
+    private Optional<Integer> fuelTankCapacity;
     private Optional<Integer> seatCapacity;
     private Optional<Integer> speed;
 

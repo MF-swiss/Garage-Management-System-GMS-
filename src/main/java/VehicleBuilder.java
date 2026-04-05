@@ -6,7 +6,7 @@ public class VehicleBuilder {
     String marke;
     String typ;
     String licensePlate;
-    Optional<Integer> consumption;
+    Optional<Double> consumption;
     Optional<Integer> range;
     Optional<Integer> fuelTankCapacity;
     Optional<Integer> seatCapacity;
@@ -24,7 +24,7 @@ public class VehicleBuilder {
         speed = Optional.empty();
     }
 
-    public VehicleBuilder setConsumption(int consumption) {
+    public VehicleBuilder setConsumption(double consumption) {
         this.consumption = Optional.of(consumption);
         return this;
     }
