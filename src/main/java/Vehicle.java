@@ -32,7 +32,7 @@ public class Vehicle {
         }
 
         if (range.isPresent()) {
-            rsult += String.format(Reichweite: %d km", range.get());
+            result += String.format(", Reichweite: %d km ", range.get());
         }
         
         if ()
@@ -41,21 +41,3 @@ public class Vehicle {
     }
     
 }
-/*	public FlugzeugBuilder setGeschwindigkeit(int geschwindigkeit) {
-		this.geschwindigkeit = Optional.of(geschwindigkeit);
-		return this;
-	}
-	
-	public FlugzeugBuilder setPassagiere(int passagiere) {
-		this.passagiere = Optional.of(passagiere);
-		return this;
-	}
-	
-	public FlugzeugBuilder setReichweite(int reichweite) {
-		this.reichweite = Optional.of(reichweite);
-		return this;
-	}
-	
-	public Flugzeug build() {
-		return new Flugzeug(this);
-	}*/
