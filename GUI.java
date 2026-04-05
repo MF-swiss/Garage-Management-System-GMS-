@@ -20,6 +20,8 @@ public class GUI {
     private JFrame mainFrame;
     private JFrame confirmFrame;
     private JLabel animationLabel;
+    private JLabel helloLabel;
+    private JLabel typeDisplayLabel;
     private Timer animationTimer;
 
     public static void main(String[] args) {
@@ -29,7 +31,7 @@ public class GUI {
     private void createMainWindow() {
         mainFrame = new JFrame("Garage Management System (GMS)");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(400, 300);
+        mainFrame.setSize(400, 350);
         mainFrame.getContentPane().setBackground(Color.GRAY);
         mainFrame.setLocationRelativeTo(null);
 
@@ -37,24 +39,41 @@ public class GUI {
         panel.setBackground(Color.GREEN);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JLabel helloLabel = new JLabel("Garage Management System (GMS)", SwingConstants.CENTER);
+
+        helloLabel = new JLabel("Garage Management System (GMS)", SwingConstants.CENTER);
         helloLabel.setOpaque(true);
         helloLabel.setBackground(Color.DARK_GRAY);
         helloLabel.setForeground(Color.WHITE);
         helloLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         helloLabel.setMaximumSize(new Dimension(280, 35));
 
-        
-        // Inputfenster erscheint sofort nach dem Öffnen
-        String eingabe = JOptionPane.showInputDialog(
-                MainWindow,
-                "Bitte Verbrauch eingeben (L/100km):"
-        );
+        // Label für Typ-Anzeige
+        typeDisplayLabel = new JLabel("Typ: -");
+        typeDisplayLabel.setOpaque(true);
+        typeDisplayLabel.setBackground(Color.LIGHT_GRAY);
+        typeDisplayLabel.setForeground(Color.BLACK);
+        typeDisplayLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        typeDisplayLabel.setMaximumSize(new Dimension(280, 25));
 
-        if (eingabe != null) {
-            helloLabel.setText("Verbrauch: " + eingabe + " L/100km");
-        }
-
+        // Eingabefeld für Typ
+        JPanel inputPanel = new JPanel();
+        inputPanel.setBackground(Color.GREEN);
+        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
+        JLabel typeLabel = new JLabel("Typ: ");
+        javax.swing.JTextField typeField = new javax.swing.JTextField();
+        typeField.setMaximumSize(new Dimension(120, 25));
+        JButton addButton = new JButton("Hinzufügen");
+        addButton.addActionListener(e -> {
+            String typ = typeField.getText();
+            if (!typ.isEmpty()) {
+                typeDisplayLabel.setText("Typ: " + typ);
+                typeField.setText("");
+            }
+        });
+        inputPanel.add(typeLabel);
+        inputPanel.add(typeField);
+        inputPanel.add(Box.createHorizontalStrut(10));
+        inputPanel.add(addButton);
 
         JButton infoButton = new JButton("Was passiert hier?");
         infoButton.setBackground(Color.BLUE);
@@ -70,9 +89,13 @@ public class GUI {
 
         panel.add(Box.createVerticalStrut(30));
         panel.add(helloLabel);
-        panel.add(Box.createVerticalStrut(25));
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(typeDisplayLabel);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(inputPanel);
+        panel.add(Box.createVerticalStrut(20));
         panel.add(infoButton);
-        panel.add(Box.createVerticalStrut(50));
+        panel.add(Box.createVerticalStrut(40));
         panel.add(exitButton);
 
         mainFrame.add(panel, BorderLayout.CENTER);
