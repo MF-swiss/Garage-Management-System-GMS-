@@ -41,18 +41,21 @@ public class Vehicle {
     }
     
 }
-
-
-    /*
-	public String toString() {
-		String result = String.format("Flugi: %s: Crew: %d, Gewicht: %d kg", 
-				this.typ, this.besatzung, this.leergewicht);
-
-		if (passagiere.isPresent()) {
-			result += String.format(", Passagiere: %d",passagiere.get());
-		}
-		
-		return result;
+/*	public FlugzeugBuilder setGeschwindigkeit(int geschwindigkeit) {
+		this.geschwindigkeit = Optional.of(geschwindigkeit);
+		return this;
 	}
-
-    */
+	
+	public FlugzeugBuilder setPassagiere(int passagiere) {
+		this.passagiere = Optional.of(passagiere);
+		return this;
+	}
+	
+	public FlugzeugBuilder setReichweite(int reichweite) {
+		this.reichweite = Optional.of(reichweite);
+		return this;
+	}
+	
+	public Flugzeug build() {
+		return new Flugzeug(this);
+	}*/
