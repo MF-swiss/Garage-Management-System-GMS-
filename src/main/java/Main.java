@@ -12,12 +12,7 @@ public class Main {
                 .build();
         System.out.println(cupra);
 
-        Vehicle ford = new VehicleBuilder(Ford, Tourneo Custom, SG 2)
-                .setSeatCapacity(8)
-                .setRange(1000)
-                .setFuelTankCapacity(75)
-                .build();
-        System.out.println(ford);
+
 
         Vehicle mini = new VehicleBuilder(MINI, Cooper, SG 3)
                 .setSeatCapacity(5)
@@ -25,6 +20,15 @@ public class Main {
                 .setRange(580)
                 .build();
         System.out.println(mini);
+
+        
+
+        Vehicle ford = new VehicleBuilder(Ford, Tourneo Custom, SG 2)
+                .setSeatCapacity(8)
+                .setRange(1000)
+                .setFuelTankCapacity(75)
+                .build();
+        System.out.println(ford);
     }
     
 }
