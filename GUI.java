@@ -56,8 +56,8 @@ public class GUI {
         helloLabel.setOpaque(true);
         helloLabel.setBackground(Color.DARK_GRAY);
         helloLabel.setForeground(Color.WHITE);
-        helloLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        helloLabel.setMaximumSize(new Dimension(280, 35));
+        helloLabel.setPreferredSize(JLabel.CENTER_ALIGNMENT);
+        helloLabel.setPreferredSize(new Dimension(400, 50));
 
         // Fahrzeug-Tabelle (Dummy-Daten)
         String[] columnNames = {"Marke", "Typ", "Kennzeichen", "Verbrauch", "Reichweite", "Tank", "Sitze", "Geschwindigkeit"};
