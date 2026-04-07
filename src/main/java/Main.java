@@ -29,6 +29,7 @@ public class Main {
                 .setConsumption(8)
                 .build();
         System.out.println(ford);
+        
     }
     
 }
