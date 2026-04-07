@@ -1,3 +1,4 @@
+package main.java;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -36,8 +37,10 @@ public class GUI {
     private JButton printButton;
     private JButton exitButton;
     private JButton exit2Button;
+    private java.util.List<Vehicle> vehicles;
 
-    private GUI() {
+    public GUI(java.util.List<Vehicle> vehicles) {
+        this.vehicles = vehicles;
         createMainWindow();
     }
 
@@ -59,13 +62,20 @@ public class GUI {
         helloLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         helloLabel.setPreferredSize(new Dimension(600, 40));
 
-        // Fahrzeug-Tabelle (Dummy-Daten)
+        // Fahrzeug-Tabelle aus Vehicle-Liste
         String[] columnNames = {"Marke", "Typ", "Kennzeichen", "Verbrauch", "Reichweite", "Tank", "Sitze", "Geschwindigkeit"};
-        Object[][] data = {
-            {"Cupra", "Ateca", "SG 1", 8.5, 540, null, null, 120},
-            {"MINI", "Cooper", "SG 4", null, 580, null, 5, 220},
-            {"Ford", "Tourneo Custom", "SG 3", 8.0, 1000, 75, 8, null}
-        };
+        Object[][] data = new Object[vehicles.size()][8];
+        for (int i = 0; i < vehicles.size(); i++) {
+            Vehicle v = vehicles.get(i);
+            data[i][0] = v.marke;
+            data[i][1] = v.typ;
+            data[i][2] = v.licensePlate;
+            data[i][3] = v.consumption.orElse(null);
+            data[i][4] = v.range.orElse(null);
+            data[i][5] = v.fuelTankCapacity.orElse(null);
+            data[i][6] = v.seatCapacity.orElse(null);
+            data[i][7] = v.speed.orElse(null);
+        }
         tableModel = new DefaultTableModel(data, columnNames) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -258,7 +268,5 @@ public class GUI {
         try { return Double.parseDouble(s); } catch (Exception e) { return null; }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new GUI());
-    }
+    // main entfernt, da GUI jetzt von Main.java aus mit Daten gestartet wird
 }
