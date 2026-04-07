@@ -67,14 +67,14 @@ public class GUI {
         Object[][] data = new Object[vehicles.size()][8];
         for (int i = 0; i < vehicles.size(); i++) {
             Vehicle v = vehicles.get(i);
-            data[i][0] = v.marke;
-            data[i][1] = v.typ;
-            data[i][2] = v.licensePlate;
-            data[i][3] = v.consumption.orElse(null);
-            data[i][4] = v.range.orElse(null);
-            data[i][5] = v.fuelTankCapacity.orElse(null);
-            data[i][6] = v.seatCapacity.orElse(null);
-            data[i][7] = v.speed.orElse(null);
+            data[i][0] = v.getMarke();
+            data[i][1] = v.getTyp();
+            data[i][2] = v.getLicensePlate();
+            data[i][3] = v.getConsumption().orElse(null);
+            data[i][4] = v.getRange().orElse(null);
+            data[i][5] = v.getFuelTankCapacity().orElse(null);
+            data[i][6] = v.getSeatCapacity().orElse(null);
+            data[i][7] = v.getSpeed().orElse(null);
         }
         tableModel = new DefaultTableModel(data, columnNames) {
             @Override
@@ -183,7 +183,6 @@ public class GUI {
         mainFrame.setVisible(true);
     }
 
-
     private void action3() {
         System.out.println("EXIT2 wurde geklickt!");
 
@@ -267,6 +266,4 @@ public class GUI {
     private static Double parseDoubleOrNull(String s) {
         try { return Double.parseDouble(s); } catch (Exception e) { return null; }
     }
-
-    // main entfernt, da GUI jetzt von Main.java aus mit Daten gestartet wird
 }

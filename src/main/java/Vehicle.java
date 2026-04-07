@@ -13,6 +13,7 @@ public class Vehicle {
     private Optional<Integer> seatCapacity;
     private Optional<Integer> speed;
 
+
     Vehicle(VehicleBuilder builder) {
         marke = builder.marke;
         typ = builder.typ;
@@ -23,6 +24,15 @@ public class Vehicle {
         seatCapacity = builder.seatCapacity;
         speed = builder.speed;
     }
+
+    String getMarke() { return marke; }
+    String getTyp() { return typ; }
+    String getLicensePlate() { return licensePlate; }
+    Optional<Double> getConsumption() { return consumption; }
+    Optional<Integer> getRange() { return range; }
+    Optional<Integer> getFuelTankCapacity() { return fuelTankCapacity; }
+    Optional<Integer> getSeatCapacity() { return seatCapacity; }
+    Optional<Integer> getSpeed() { return speed; }
 
     public String toString() {
         String result = String.format("Marke: %s, Typ: %s, Kennzeichen: %s", marke, typ, licensePlate);
