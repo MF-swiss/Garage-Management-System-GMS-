@@ -52,12 +52,12 @@ public class GUI {
         panel.setBackground(Color.WHITE);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        helloLabel = new JLabel("Garage Management System (GMS)", SwingConstants.CENTER);
+        helloLabel = new JLabel(" Garage Management System (GMS) ", SwingConstants.CENTER);
         helloLabel.setOpaque(true);
         helloLabel.setBackground(Color.DARK_GRAY);
         helloLabel.setForeground(Color.WHITE);
-        helloLabel.setPreferredSize(JLabel.CENTER_ALIGNMENT);
-        helloLabel.setPreferredSize(new Dimension(400, 50));
+        helloLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        helloLabel.setPreferredSize(new Dimension(600, 40));
 
         // Fahrzeug-Tabelle (Dummy-Daten)
         String[] columnNames = {"Marke", "Typ", "Kennzeichen", "Verbrauch", "Reichweite", "Tank", "Sitze", "Geschwindigkeit"};
