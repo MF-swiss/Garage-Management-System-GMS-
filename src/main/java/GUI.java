@@ -16,7 +16,8 @@ public class GUI {
     private int index = 0;
     private JLabel helloLabel;
     private JLabel animationLabel;
-    private String[] FRAMES = {"Cupra Ateca", "MINI Cooper", "Ford Tourneo Custom"};
+    // Für Animation: ASCII-Sanduhr mit Strichen
+    private String[] FRAMES = {"|", "/", "-", "\\"};
     private DefaultTableModel tableModel;
     private JTable table;
     private TableRowSorter<TableModel> sorter;
@@ -123,9 +124,20 @@ public class GUI {
         tankField = new JTextField(); tankField.setMaximumSize(new Dimension(60, 25));
         sitzeField = new JTextField(); sitzeField.setMaximumSize(new Dimension(40, 25));
         speedField = new JTextField(); speedField.setMaximumSize(new Dimension(60, 25));
-        addPanel.add(new JLabel("Marke:")); addPanel.add(markeField);
-        addPanel.add(new JLabel(" Typ:")); addPanel.add(typF);
-        addPanel.add(new JLabel(" Kennz.:")); addPanel.add(kennzField);
+
+        JLabel markeLabel = new JLabel("Marke*:");
+        markeLabel.setForeground(Color.RED.darker());
+        markeLabel.setToolTipText("Pflichtfeld");
+        JLabel typLabel = new JLabel(" Typ*:");
+        typLabel.setForeground(Color.RED.darker());
+        typLabel.setToolTipText("Pflichtfeld");
+        JLabel kennzLabel = new JLabel(" Kennz.*:");
+        kennzLabel.setForeground(Color.RED.darker());
+        kennzLabel.setToolTipText("Pflichtfeld");
+
+        addPanel.add(markeLabel); addPanel.add(markeField);
+        addPanel.add(typLabel); addPanel.add(typF);
+        addPanel.add(kennzLabel); addPanel.add(kennzField);
         addPanel.add(new JLabel(" Verbrauch:")); addPanel.add(verbrauchField);
         addPanel.add(new JLabel(" Reichw.:")); addPanel.add(reichweiteField);
         addPanel.add(new JLabel(" Tank:")); addPanel.add(tankField);
@@ -133,6 +145,11 @@ public class GUI {
         addPanel.add(new JLabel(" Speed:")); addPanel.add(speedField);
         addCarButton = new JButton("Fahrzeug hinzufügen");
         addCarButton.addActionListener(e -> {
+            // Pflichtfelder prüfen
+            if (markeField.getText().trim().isEmpty() || typF.getText().trim().isEmpty() || kennzField.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(mainFrame, "Bitte alle Pflichtfelder (*) ausfüllen!", "Fehler", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             Object[] row = new Object[8];
             row[0] = markeField.getText();
             row[1] = typF.getText();
@@ -143,6 +160,34 @@ public class GUI {
             row[6] = sitzeField.getText().isEmpty() ? null : parseIntOrNull(sitzeField.getText());
             row[7] = speedField.getText().isEmpty() ? null : parseIntOrNull(speedField.getText());
             tableModel.addRow(row);
+
+            // Neues Vehicle-Objekt erzeugen und zur Liste hinzufügen (mit robustem Typ-Cast)
+            VehicleBuilder builder = new VehicleBuilder(
+                (String) row[0], (String) row[1], (String) row[2]
+            );
+            // Robust cast für alle Felder (Double/Integer)
+            if (row[3] != null) {
+                if (row[3] instanceof Double d) builder.setConsumption(d);
+                else if (row[3] instanceof Integer i) builder.setConsumption(i.doubleValue());
+            }
+            if (row[4] != null) {
+                if (row[4] instanceof Integer i) builder.setRange(i);
+                else if (row[4] instanceof Double d) builder.setRange(d.intValue());
+            }
+            if (row[5] != null) {
+                if (row[5] instanceof Integer i) builder.setFuelTankCapacity(i);
+                else if (row[5] instanceof Double d) builder.setFuelTankCapacity(d.intValue());
+            }
+            if (row[6] != null) {
+                if (row[6] instanceof Integer i) builder.setSeatCapacity(i);
+                else if (row[6] instanceof Double d) builder.setSeatCapacity(d.intValue());
+            }
+            if (row[7] != null) {
+                if (row[7] instanceof Integer i) builder.setSpeed(i);
+                else if (row[7] instanceof Double d) builder.setSpeed(d.intValue());
+            }
+            vehicles.add(builder.build());
+
             markeField.setText(""); typF.setText(""); kennzField.setText(""); verbrauchField.setText("");
             reichweiteField.setText(""); tankField.setText(""); sitzeField.setText(""); speedField.setText("");
         });
