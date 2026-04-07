@@ -6,6 +6,13 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 public class GUI {
+        // Hilfsmethoden für Zahl-Parsing
+        private static Integer parseIntOrNull(String s) {
+            try { return Integer.parseInt(s); } catch (Exception e) { return null; }
+        }
+        private static Double parseDoubleOrNull(String s) {
+            try { return Double.parseDouble(s); } catch (Exception e) { return null; }
+        }
     private static final String[] FRAMES = {"⌛", "⏳"};
     private int index = 0;
 
@@ -23,7 +30,7 @@ public class GUI {
     private void createMainWindow() {
     mainFrame = new JFrame("Garage Management System (GMS)");
     mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    mainFrame.setSize(800, 550);
+    mainFrame.setSize(800, 600);
     mainFrame.getContentPane().setBackground(Color.GRAY);
     mainFrame.setLocationRelativeTo(null);
 
@@ -44,7 +51,7 @@ public class GUI {
             return false;
         }
     };
-    JTable table = new JTable(tableModel);
+    final JTable table = new JTable(tableModel);
     TableRowSorter<TableModel> sorter = new TableRowSorter<>(tableModel);
     table.setRowSorter(sorter);
     JScrollPane tableScroll = new JScrollPane(table);
@@ -88,15 +95,15 @@ public class GUI {
     typeDisplayLabel.setAlignmentX(JLabel.CENTER_ALIGNMENT);
     typeDisplayLabel.setMaximumSize(new Dimension(280, 25));
 
-    // Eingabefeld für Typ
+    // Eingabefeld für Typ (optional, kann entfernt werden)
     JPanel inputPanel = new JPanel();
     inputPanel.setBackground(Color.LIGHT_GRAY);
     inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
     JLabel typeLabel = new JLabel("Typ: ");
-    javax.swing.JTextField typeField = new javax.swing.JTextField();
+    JTextField typeField = new JTextField();
     typeField.setMaximumSize(new Dimension(120, 25));
-    JButton addButton = new JButton("Hinzufügen");
-    addButton.addActionListener(e -> {
+    JButton addTypeButton = new JButton("Typ anzeigen");
+    addTypeButton.addActionListener(e -> {
         String typ = typeField.getText();
         if (!typ.isEmpty()) {
             typeDisplayLabel.setText("Typ: " + typ);
@@ -106,7 +113,44 @@ public class GUI {
     inputPanel.add(typeLabel);
     inputPanel.add(typeField);
     inputPanel.add(Box.createHorizontalStrut(10));
-    inputPanel.add(addButton);
+    inputPanel.add(addTypeButton);
+
+    // Formular für neues Fahrzeug
+    JPanel addPanel = new JPanel();
+    addPanel.setBackground(Color.LIGHT_GRAY);
+    addPanel.setLayout(new BoxLayout(addPanel, BoxLayout.X_AXIS));
+    JTextField markeField = new JTextField(); markeField.setMaximumSize(new Dimension(80, 25));
+    JTextField typF = new JTextField(); typF.setMaximumSize(new Dimension(80, 25));
+    JTextField kennzField = new JTextField(); kennzField.setMaximumSize(new Dimension(80, 25));
+    JTextField verbrauchField = new JTextField(); verbrauchField.setMaximumSize(new Dimension(60, 25));
+    JTextField reichweiteField = new JTextField(); reichweiteField.setMaximumSize(new Dimension(60, 25));
+    JTextField tankField = new JTextField(); tankField.setMaximumSize(new Dimension(60, 25));
+    JTextField sitzeField = new JTextField(); sitzeField.setMaximumSize(new Dimension(40, 25));
+    JTextField speedField = new JTextField(); speedField.setMaximumSize(new Dimension(60, 25));
+    addPanel.add(new JLabel("Marke:")); addPanel.add(markeField);
+    addPanel.add(new JLabel(" Typ:")); addPanel.add(typF);
+    addPanel.add(new JLabel(" Kennz.:")); addPanel.add(kennzField);
+    addPanel.add(new JLabel(" Verbrauch:")); addPanel.add(verbrauchField);
+    addPanel.add(new JLabel(" Reichw.:")); addPanel.add(reichweiteField);
+    addPanel.add(new JLabel(" Tank:")); addPanel.add(tankField);
+    addPanel.add(new JLabel(" Sitze:")); addPanel.add(sitzeField);
+    addPanel.add(new JLabel(" Speed:")); addPanel.add(speedField);
+    JButton addCarButton = new JButton("Fahrzeug hinzufügen");
+    addCarButton.addActionListener(e -> {
+        Object[] row = new Object[8];
+        row[0] = markeField.getText();
+        row[1] = typF.getText();
+        row[2] = kennzField.getText();
+        row[3] = verbrauchField.getText().isEmpty() ? null : parseDoubleOrNull(verbrauchField.getText());
+        row[4] = reichweiteField.getText().isEmpty() ? null : parseIntOrNull(reichweiteField.getText());
+        row[5] = tankField.getText().isEmpty() ? null : parseIntOrNull(tankField.getText());
+        row[6] = sitzeField.getText().isEmpty() ? null : parseIntOrNull(sitzeField.getText());
+        row[7] = speedField.getText().isEmpty() ? null : parseIntOrNull(speedField.getText());
+        tableModel.addRow(row);
+        markeField.setText(""); typF.setText(""); kennzField.setText(""); verbrauchField.setText("");
+        reichweiteField.setText(""); tankField.setText(""); sitzeField.setText(""); speedField.setText("");
+    });
+    addPanel.add(addCarButton);
 
     JButton printButton = new JButton("Drucken");
     printButton.setBackground(Color.BLUE);
@@ -137,6 +181,8 @@ public class GUI {
     panel.add(Box.createVerticalStrut(10));
     panel.add(tableScroll);
     panel.add(Box.createVerticalStrut(20));
+    panel.add(addPanel);
+    panel.add(Box.createVerticalStrut(20));
     panel.add(printButton);
     panel.add(Box.createVerticalStrut(40));
     panel.add(exitButton);
@@ -156,7 +202,6 @@ public class GUI {
         if (confirmFrame != null) {
             confirmFrame.dispose();
         }
-            panel.add(printButton);
         if (mainFrame != null) {
             mainFrame.dispose();
         }
@@ -212,5 +257,13 @@ public class GUI {
             animationLabel.setText(FRAMES[index]);
         });
         animationTimer.start();
+    }
+
+    private static Integer parseIntOrNull(String s) {
+    try { return Integer.parseInt(s); } catch (Exception e) { return null; }
+    }
+
+    private static Double parseDoubleOrNull(String s) {
+    try { return Double.parseDouble(s); } catch (Exception e) { return null; }
     }
 }
