@@ -13,7 +13,7 @@ public class GUI {
         private static Double parseDoubleOrNull(String s) {
             try { return Double.parseDouble(s); } catch (Exception e) { return null; }
         }
-    private static final String[] FRAMES = {"⌛", "⏳"};
+    private static final String[] FRAMES = {"|", "/", "-", "\\"};
     private int index = 0;
 
     private JFrame mainFrame;
@@ -208,6 +208,10 @@ public class GUI {
     }
 
     private void confirmExit() {
+        // Stoppe ggf. laufende Animation, damit sie beim erneuten Öffnen nicht doppelt läuft
+        if (animationTimer != null) {
+            animationTimer.stop();
+        }
         if (confirmFrame != null && confirmFrame.isDisplayable()) {
             confirmFrame.toFront();
             return;
@@ -254,16 +258,12 @@ public class GUI {
     private void startAnimation() {
         animationTimer = new Timer(500, e -> {
             index = (index + 1) % FRAMES.length;
-            animationLabel.setText(FRAMES[index]);
+            if (animationLabel != null) {
+                animationLabel.setText(FRAMES[index]);
+            }
         });
         animationTimer.start();
     }
 
-    private static Integer parseIntOrNull(String s) {
-    try { return Integer.parseInt(s); } catch (Exception e) { return null; }
-    }
-
-    private static Double parseDoubleOrNull(String s) {
-    try { return Double.parseDouble(s); } catch (Exception e) { return null; }
-    }
+    // entfernt (Duplikat)
 }
